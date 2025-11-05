@@ -38,6 +38,7 @@ export const CheckOnGithub: React.FC = () => {
               fontSize: 160,
             }}
           >
+          i will be back soon
             $ git {typeWriter("checkout", progress)}
           </AbsoluteFill>
         </Series.Sequence>
