@@ -1,0 +1,2 @@
+patchedDependencies:
+  '@remotion/media-parser@4.0.332': patches/@remotion__media-parser@4.0.332.patch

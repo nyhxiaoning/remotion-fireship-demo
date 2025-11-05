@@ -1,0 +1,13 @@
+diff --git a/dist/containers/wav/parse-wav.js b/dist/containers/wav/parse-wav.js
+index c7fcf389939c552cea612570f4a62d94b4bf1bd3..d69496b88e0cbdeaf4c8cfecd89f0cda6c75a8e3 100644
+--- a/dist/containers/wav/parse-wav.js
++++ b/dist/containers/wav/parse-wav.js
+@@ -33,7 +33,7 @@ const parseWav = (state) => {
+     if (type === 'id3') {
+         return (0, parse_id3_1.parseId3)({ state });
+     }
+-    if (type === 'junk' || type === 'fllr') {
++    if (type === 'junk' || type === 'fllr'|| type === 'bext') {
+         return (0, parse_junk_1.parseJunk)({ state });
+     }
+     if (type === 'fact') {
