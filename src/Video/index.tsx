@@ -1,4 +1,8 @@
-import { /* Audio, */ Sequence, Series, staticFile } from "remotion";
+import React, { useState } from "react";
+import { Audio, Sequence, Series, staticFile } from "remotion";
+import SafeAudio from "../components/AudioBypass";
+import { AudioDiagnostics } from "../components/AudioDiagnosticsSimple";
+import { AudioTest } from "../components/AudioTest";
 
 import { WeatherMap } from "../components/WeatherMap/WeatherMap";
 
@@ -18,9 +22,26 @@ import { VideoMadeInReact } from "./VideoMadeInReact";
 import { FlipVideo } from "./Flipbook/FlipVideo";
 import { ForwardsDataDriven } from "./DataDriven/ForwardsDataDriven";
 
-const audio = staticFile("audio.wav");
+const audio = staticFile("audio-compatible.wav");
+
+// 音频错误处理回调
+const handleAudioError = (error: Error) => {
+  console.error('音频加载失败:', error);
+  // 可以在这里添加用户通知逻辑
+};
+
+const handleAudioLoad = () => {
+  console.log('音频文件加载成功');
+};
 
 export const Remotion = () => {
+  const [audioError, setAudioError] = useState<string | null>(null);
+
+  const handleAudioErrorWithDiagnostics = (error: Error) => {
+    handleAudioError(error);
+    setAudioError(error.message);
+  };
+
   return (
     <>
       <Series>
@@ -72,8 +93,40 @@ export const Remotion = () => {
       <Sequence from={1700} durationInFrames={50}>
         <CheckOnGithub />
       </Sequence>
-      {/* 临时注释音频，避免WAV解析错误 */}
-      {/* <Audio src={audio} /> */}
+      
+      {/* 音频诊断组件 */}
+      <AudioDiagnostics 
+        audioSrc={audio} 
+        onError={setAudioError}
+      />
+      
+      {/* 安全的音频组件 */}
+      <SafeAudio 
+        src={audio} 
+        onError={handleAudioErrorWithDiagnostics}
+        onLoad={handleAudioLoad}
+      />
+      
+      {/* 音频错误显示 */}
+      {audioError && (
+        <div style={{
+          position: 'absolute',
+          bottom: 10,
+          left: 10,
+          backgroundColor: 'rgba(239, 68, 68, 0.9)',
+          color: 'white',
+          padding: '8px 12px',
+          borderRadius: '4px',
+          fontSize: '12px',
+          maxWidth: '400px',
+          zIndex: 1001
+        }}>
+          🔇 音频错误: {audioError}
+        </div>
+      )}
+      
+      {/* 音频测试显示 */}
+      <AudioTest />
     </>
   );
 };

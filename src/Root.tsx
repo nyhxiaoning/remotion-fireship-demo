@@ -18,7 +18,7 @@ import { ZoomOutEditor } from "./Video/ZoomOutEditor";
 import { ToCodeEditor } from "./Video/ZoomOutEditor/ToCodeEditor";
 import { getFont } from "./Video/helpers/load-font";
 import { PosterMaker, PosterMakerVideo } from "./poster-maker/PosterMaker";
-import { PosterEditorDemo } from "./demo/PosterEditorDemo";
+import { PosterEditorDemo } from "./poster-editor/PosterEditorDemo";
 
 const { width, height } = CANVAS;
 const fps = 30;
