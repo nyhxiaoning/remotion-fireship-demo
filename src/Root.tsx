@@ -17,6 +17,8 @@ import { StorifyData } from "./Video/StorifyData";
 import { ZoomOutEditor } from "./Video/ZoomOutEditor";
 import { ToCodeEditor } from "./Video/ZoomOutEditor/ToCodeEditor";
 import { getFont } from "./Video/helpers/load-font";
+import { PosterMaker, PosterMakerVideo } from "./poster-maker/PosterMaker";
+import { PosterEditorDemo } from "./demo/PosterEditorDemo";
 
 const { width, height } = CANVAS;
 const fps = 30;
@@ -150,6 +152,39 @@ export const RemotionVideo = () => {
         fps={fps}
         width={width}
         height={height}
+      />
+      
+      {/* 低代码海报制作器 */}
+      <Composition
+        id="PosterMaker"
+        component={PosterMaker}
+        durationInFrames={300}
+        fps={fps}
+        width={1920}
+        height={1080}
+      />
+      
+      {/* 海报视频展示 */}
+      <Composition
+        id="PosterMakerVideo"
+        component={PosterMakerVideo}
+        durationInFrames={120}
+        fps={fps}
+        width={1920}
+        height={1080}
+        defaultProps={{
+          posterDataUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
+        }}
+      />
+      
+      {/* 海报编辑器演示 */}
+      <Composition
+        id="PosterEditorDemo"
+        component={PosterEditorDemo}
+        durationInFrames={300}
+        fps={fps}
+        width={1920}
+        height={1080}
       />
     </>
   );

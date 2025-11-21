@@ -1,4 +1,4 @@
-import { Audio, Sequence, Series, staticFile } from "remotion";
+import { /* Audio, */ Sequence, Series, staticFile } from "remotion";
 
 import { WeatherMap } from "../components/WeatherMap/WeatherMap";
 
@@ -18,7 +18,7 @@ import { VideoMadeInReact } from "./VideoMadeInReact";
 import { FlipVideo } from "./Flipbook/FlipVideo";
 import { ForwardsDataDriven } from "./DataDriven/ForwardsDataDriven";
 
-const audio = staticFile("/audio.wav");
+const audio = staticFile("audio.wav");
 
 export const Remotion = () => {
   return (
@@ -72,7 +72,8 @@ export const Remotion = () => {
       <Sequence from={1700} durationInFrames={50}>
         <CheckOnGithub />
       </Sequence>
-      <Audio src={audio} />
+      {/* 临时注释音频，避免WAV解析错误 */}
+      {/* <Audio src={audio} /> */}
     </>
   );
 };
