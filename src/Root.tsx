@@ -1,24 +1,26 @@
-import { Composition } from "remotion";
+import { PosterMaker, PosterMakerVideo } from "./poster-maker/PosterMaker";
 
-import { Remotion } from "./Video/index";
-import { CheckOnGithub } from "./Video/CheckOnGithub/Github";
 import { CANVAS } from "./Video/components/Canvas";
-import { MadeDifferent as MadeDifferent } from "./Video/components/MadeDifferent";
-import { ThrowOut } from "./Video/components/ThrowOut";
-import { ThrowOutZoomed } from "./Video/components/ThrowOut/Zoomed";
+import { CheckOnGithub } from "./Video/CheckOnGithub/Github";
 import { CloudyMap } from "./components/WeatherMap/CloudyMap";
-import { RainMap } from "./components/WeatherMap/RainMap";
-import { Thunderstorm } from "./components/WeatherMap/Thunderstorm";
-import { ThunderstormMap } from "./components/WeatherMap/ThunderstormMap";
-import { WeatherMap } from "./components/WeatherMap/WeatherMap";
+import { Composition } from "remotion";
 import { DataDriven } from "./Video/DataDriven";
 import { LikeAndSubscribe } from "./Video/LikeAndSubscribe";
-import { StorifyData } from "./Video/StorifyData";
-import { ZoomOutEditor } from "./Video/ZoomOutEditor";
-import { ToCodeEditor } from "./Video/ZoomOutEditor/ToCodeEditor";
-import { getFont } from "./Video/helpers/load-font";
-import { PosterMaker, PosterMakerVideo } from "./poster-maker/PosterMaker";
+import { MadeDifferent } from "./Video/components/MadeDifferent";
+import { MatrixStyle } from "./Video/MatrixStyle";
 import { PosterEditorDemo } from "./poster-editor/PosterEditorDemo";
+import { RainMap } from "./components/WeatherMap/RainMap";
+import { Remotion } from "./Video/index";
+import { StorifyData } from "./Video/StorifyData";
+import { ThrowOut } from "./Video/components/ThrowOut";
+import { ThrowOutZoomed } from "./Video/components/ThrowOut/Zoomed";
+import { Thunderstorm } from "./components/WeatherMap/Thunderstorm";
+import { ThunderstormMap } from "./components/WeatherMap/ThunderstormMap";
+import { ToCodeEditor } from "./Video/ZoomOutEditor/ToCodeEditor";
+import { TrailerWithSubs } from "./Video/TrailerWithSubs";
+import { WeatherMap } from "./components/WeatherMap/WeatherMap";
+import { ZoomOutEditor } from "./Video/ZoomOutEditor";
+import { getFont } from "./Video/helpers/load-font";
 
 const { width, height } = CANVAS;
 const fps = 30;
@@ -153,7 +155,7 @@ export const RemotionVideo = () => {
         width={width}
         height={height}
       />
-      
+
       {/* 低代码海报制作器 */}
       <Composition
         id="PosterMaker"
@@ -163,7 +165,7 @@ export const RemotionVideo = () => {
         width={1920}
         height={1080}
       />
-      
+
       {/* 海报视频展示 */}
       <Composition
         id="PosterMakerVideo"
@@ -173,15 +175,32 @@ export const RemotionVideo = () => {
         width={1920}
         height={1080}
         defaultProps={{
-          posterDataUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
+          posterDataUrl:
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==",
         }}
       />
-      
+
       {/* 海报编辑器演示 */}
       <Composition
         id="PosterEditorDemo"
         component={PosterEditorDemo}
         durationInFrames={300}
+        fps={fps}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="MatrixStyle"
+        component={MatrixStyle}
+        durationInFrames={18 * fps}
+        fps={fps}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="TrailerWithSubs"
+        component={TrailerWithSubs}
+        durationInFrames={20 * fps}
         fps={fps}
         width={1920}
         height={1080}
