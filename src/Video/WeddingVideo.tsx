@@ -25,13 +25,12 @@ export const WeddingVideo: React.FC<WeddingVideoProps> = ({ project }) => {
   // 每张照片的显示时长
   const photoDuration = Math.floor(durationInFrames / Math.max(photos.length, 1));
   
-  // 文案出现的时间点
-  const textTimings = {
-    opening: 0,
-    meeting: photoDuration,
-    love: photoDuration * 2,
-    blessing: photoDuration * 3,
-  };
+  // 文案出现的时间点（动态计算）
+  const textKeys = Object.keys(texts);
+  const textTimings: Record<string, number> = {};
+  textKeys.forEach((key, index) => {
+    textTimings[key] = index * (photoDuration / Math.max(textKeys.length, 1));
+  });
 
   return (
     <AbsoluteFill style={{ 
@@ -80,9 +79,9 @@ export const WeddingVideo: React.FC<WeddingVideoProps> = ({ project }) => {
         );
       })}
 
-      {/* 文案展示 */}
+      {/* 文案展示（动态段落） */}
       {Object.entries(texts).map(([key, text], index) => {
-        const startFrame = textTimings[key as keyof typeof textTimings];
+        const startFrame = textTimings[key];
         const progress = interpolate(frame, [startFrame, startFrame + 30], [0, 1], {
           extrapolateLeft: 'clamp',
           extrapolateRight: 'clamp',

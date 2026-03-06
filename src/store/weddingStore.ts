@@ -19,14 +19,16 @@ const defaultTemplate: WeddingTemplate = {
   colors: {
     primary: '#DC143C',
     secondary: '#FFD700'
-  }
+  },
+  duration: 30,
+  textFields: ['开场', '相识', '相爱', '祝福']
 };
 
 const defaultTexts: WeddingText = {
-  opening: '良辰吉日，佳偶天成',
-  meeting: '缘起今生，情定三生',
-  love: '执子之手，与子偕老',
-  blessing: '百年好合，永结同心'
+  开场: '良辰吉日，佳偶天成',
+  相识: '缘起今生，情定三生',
+  相爱: '执子之手，与子偕老',
+  祝福: '百年好合，永结同心'
 };
 
 export const useWeddingStore = create<WeddingStore>((set, get) => ({
@@ -51,7 +53,14 @@ export const useWeddingStore = create<WeddingStore>((set, get) => ({
   })),
 
   setTemplate: (template) => set((state) => ({
-    project: { ...state.project, template }
+    project: { 
+      ...state.project, 
+      template,
+      duration: template.duration,
+      texts: Object.fromEntries(
+        template.textFields.map(field => [field, state.project.texts[field] || ''])
+      )
+    }
   })),
 
   addPhoto: (photo) => set((state) => ({

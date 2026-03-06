@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Upload, Image, Music, Type, Play, ArrowRight } from 'lucide-react';
+import { Upload, Image, Music, Type, Play, ArrowRight, Plus, Settings } from 'lucide-react';
 import { useWeddingStore } from '../store/weddingStore';
-import type { WeddingPhoto } from '@/types';
+import { WeddingPhoto } from '../types';
 
 const Editor: React.FC = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Editor: React.FC = () => {
     });
   }, [addPhoto]);
 
-  const handleTextChange = useCallback((field: keyof typeof project.texts, value: string) => {
+  const handleTextChange = useCallback((field: string, value: string) => {
     setTexts({ ...project.texts, [field]: value });
   }, [project.texts, setTexts]);
 
@@ -39,9 +39,18 @@ const Editor: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50">
       <div className="container mx-auto px-6 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-red-800 mb-4">编辑婚礼视频</h1>
-          <p className="text-red-600">上传照片，编辑文案，制作专属的中式婚礼视频</p>
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-red-800 mb-2">编辑婚礼视频</h1>
+            <p className="text-red-600">上传照片，编辑文案，制作专属的中式婚礼视频</p>
+          </div>
+          <button
+            onClick={() => navigate('/create-template')}
+            className="flex items-center space-x-2 bg-yellow-500 hover:bg-yellow-400 text-red-800 px-4 py-2 rounded-lg font-medium"
+          >
+            <Settings className="w-4 h-4" />
+            <span>自定义模板</span>
+          </button>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
@@ -93,24 +102,22 @@ const Editor: React.FC = () => {
               <div className="flex items-center mb-4">
                 <Type className="w-6 h-6 text-red-600 mr-2" />
                 <h2 className="text-2xl font-bold text-red-800">文案编辑</h2>
+                <div className="ml-auto text-sm text-red-600 bg-red-50 px-3 py-1 rounded">
+                  时长: {project.duration}秒
+                </div>
               </div>
               <div className="space-y-4">
-                <div>
-                  <label className="block text-red-700 mb-2">开场</label>
-                  <input value={project.texts.opening} onChange={(e) => handleTextChange('opening', e.target.value)} className="w-full border rounded-lg p-2" />
-                </div>
-                <div>
-                  <label className="block text-red-700 mb-2">相识</label>
-                  <input value={project.texts.meeting} onChange={(e) => handleTextChange('meeting', e.target.value)} className="w-full border rounded-lg p-2" />
-                </div>
-                <div>
-                  <label className="block text-red-700 mb-2">相爱</label>
-                  <input value={project.texts.love} onChange={(e) => handleTextChange('love', e.target.value)} className="w-full border rounded-lg p-2" />
-                </div>
-                <div>
-                  <label className="block text-red-700 mb-2">祝福</label>
-                  <input value={project.texts.blessing} onChange={(e) => handleTextChange('blessing', e.target.value)} className="w-full border rounded-lg p-2" />
-                </div>
+                {project.template.textFields.map((field) => (
+                  <div key={field}>
+                    <label className="block text-red-700 mb-2">{field}</label>
+                    <input
+                      value={project.texts[field] || ''}
+                      onChange={(e) => handleTextChange(field, e.target.value)}
+                      className="w-full border rounded-lg p-2"
+                      placeholder={`请输入${field}文案`}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
 

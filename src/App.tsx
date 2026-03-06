@@ -1,5 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
+import CreateTemplate from "@/pages/CreateTemplate";
 import Editor from "@/pages/Editor";
 import Home from "@/pages/Home";
 import Preview from "@/pages/Preview";
@@ -10,6 +11,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/create-template" element={<CreateTemplate />} />
         <Route path="/editor" element={<Editor />} />
         <Route path="/preview" element={<Preview />} />
         <Route path="/render" element={<Render />} />

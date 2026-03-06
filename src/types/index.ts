@@ -7,10 +7,7 @@ export interface WeddingPhoto {
 }
 
 export interface WeddingText {
-  opening: string;
-  meeting: string;
-  love: string;
-  blessing: string;
+  [key: string]: string;
 }
 
 export interface WeddingMusic {
@@ -28,6 +25,8 @@ export interface WeddingTemplate {
     primary: string;
     secondary: string;
   };
+  duration: number;
+  textFields: string[];
 }
 
 export interface WeddingProject {
