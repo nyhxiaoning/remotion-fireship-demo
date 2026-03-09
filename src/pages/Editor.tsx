@@ -92,7 +92,19 @@ const Editor: React.FC = () => {
                     <p className="text-sm text-red-500">30秒</p>
                   </div>
                 </label>
-                <button onClick={() => setMusic({ id: 'wedding_traditional', name: '中式婚礼音乐', duration: 30, url: '/assets/music/traditional.mp3' })} className="mt-2 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">选择音乐</button>
+                <button
+                  onClick={() =>
+                    setMusic({
+                      id: 'wedding_traditional',
+                      name: '中式婚礼音乐',
+                      duration: 30,
+                      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+                    })
+                  }
+                  className="mt-2 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  选择音乐
+                </button>
               </div>
             </div>
           </div>

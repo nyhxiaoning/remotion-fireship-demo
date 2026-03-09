@@ -29,6 +29,9 @@ const Preview: React.FC = () => {
             compositionWidth={1920}
             compositionHeight={1080}
             controls
+            showVolumeControls
+            initiallyMuted={false}
+            autoPlay
             inputProps={{ project }}
           />
         </div>

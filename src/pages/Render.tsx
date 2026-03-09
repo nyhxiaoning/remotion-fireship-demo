@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Download, Play, Film } from 'lucide-react';
 import { useWeddingStore } from '@/store/weddingStore';
-import { renderMedia, selectComposition } from '@remotion/renderer';
+import { Player } from '@remotion/player';
 import { WeddingVideo } from '@/Video/WeddingVideo';
 
 const Render: React.FC = () => {
@@ -11,34 +11,41 @@ const Render: React.FC = () => {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const { project } = useWeddingStore();
   const navigate = useNavigate();
+  const playerRef = useRef<any>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const hiddenContainerRef = useRef<HTMLDivElement | null>(null);
+  const fps = 30;
+  const durationMs = project.duration * 1000;
 
-  const startRender = async () => {
+  const startRender = async (e?: React.SyntheticEvent) => {
     setIsRendering(true);
-    setProgress(0);
+    setProgress(1);
     
     try {
-      // 模拟进度更新
-      const progressInterval = setInterval(() => {
-        setProgress(p => {
-          if (p >= 90) {
-            clearInterval(progressInterval);
-            return 90;
+      const resp = await fetch('http://localhost:3001/api/render', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ project }),
+      });
+      if (!resp.ok) {
+        throw new Error('渲染服务返回错误');
+      }
+      const reader = resp.body?.getReader();
+      const chunks: Uint8Array[] = [];
+      if (reader) {
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          if (value) {
+            chunks.push(value);
           }
-          return p + 10;
-        });
-      }, 500);
-
-      // 实际渲染逻辑（需要服务器端支持）
-      // 这里使用模拟数据
-      setTimeout(() => {
-        clearInterval(progressInterval);
-        setProgress(100);
-        
-        // 创建模拟的视频URL（实际项目中这里应该是真实的渲染结果）
-        const mockVideoUrl = 'data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAACKBtZGF0AAAC';
-        setVideoUrl(mockVideoUrl);
-        setIsRendering(false);
-      }, 5000);
+        }
+      }
+      const blob = new Blob(chunks, { type: 'video/mp4' });
+      const url = URL.createObjectURL(blob);
+      setVideoUrl(url);
+      setIsRendering(false);
+      setProgress(100);
 
     } catch (error) {
       console.error('渲染失败:', error);
@@ -58,10 +65,7 @@ const Render: React.FC = () => {
     document.body.removeChild(link);
   };
 
-  useEffect(() => {
-    // 组件加载时自动开始渲染
-    startRender();
-  }, []);
+  // 移除自动渲染，改为用户点击触发，以满足浏览器媒体策略
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50">
@@ -113,6 +117,8 @@ const Render: React.FC = () => {
                     <span>渲染中，请稍候...</span>
                   </div>
                 )}
+
+                <div className="text-center text-red-500 text-sm">将调用服务端渲染生成 MP4</div>
               </div>
             ) : (
               <div className="space-y-6">
