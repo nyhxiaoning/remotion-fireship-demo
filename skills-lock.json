@@ -5,6 +5,11 @@
       "source": "remotion-dev/skills",
       "sourceType": "github",
       "computedHash": "9851afb52e1b892c43b2af973bda1776ce01fedfdfe704e0cfd70069a3a9c300"
+    },
+    "remotion-video-production": {
+      "source": "supercent-io/skills-template",
+      "sourceType": "github",
+      "computedHash": "792969beb7b321db2abdf10d4b1b232b34652af752b0d5b4f70db75f75f6bfdb"
     }
   }
 }

@@ -12,14 +12,12 @@ app.use(express.json({limit: '10mb'}));
 
 app.post('/api/render', async (req, res) => {
   try {
-    const project = req.body?.project;
-    if (!project) {
-      return res.status(400).json({error: 'missing project'});
-    }
+    const { compositionId, props } = req.body || {};
+    const compId = compositionId || 'wedding-video';
     const entry = path.join(__dirname, 'remotion-entry.jsx');
     const serveUrl = await bundle(entry);
-    const comps = await getCompositions(serveUrl, {inputProps: {project}});
-    const comp = comps.find((c) => c.id === 'wedding-video');
+    const comps = await getCompositions(serveUrl, {inputProps: props || {}});
+    const comp = comps.find((c) => c.id === compId);
     if (!comp) {
       return res.status(500).json({error: 'composition not found'});
     }
@@ -30,7 +28,7 @@ app.post('/api/render', async (req, res) => {
       codec: 'h264',
       audioCodec: 'aac',
       outputLocation: outPath,
-      inputProps: {project},
+      inputProps: props || {},
       ffmpegExecutable: ffmpegPath,
       chromiumOptions: {gl: 'angle'},
     });
@@ -50,4 +48,3 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log('Render server listening on', port);
 });
-
