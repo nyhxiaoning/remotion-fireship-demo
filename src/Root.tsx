@@ -8,6 +8,7 @@ import { DataDriven } from "./Video/DataDriven";
 import { LikeAndSubscribe } from "./Video/LikeAndSubscribe";
 import { MadeDifferent } from "./Video/components/MadeDifferent";
 import { MatrixStyle } from "./Video/MatrixStyle";
+import { CatAndMouse } from "./Video/CatAndMouse";
 import { PosterEditorDemo } from "./poster-editor/PosterEditorDemo";
 import { RainMap } from "./components/WeatherMap/RainMap";
 import { Remotion } from "./Video/index";
@@ -193,6 +194,14 @@ export const RemotionVideo = () => {
         id="MatrixStyle"
         component={MatrixStyle}
         durationInFrames={18 * fps}
+        fps={fps}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="CatAndMouse"
+        component={CatAndMouse}
+        durationInFrames={20 * fps}
         fps={fps}
         width={1920}
         height={1080}
