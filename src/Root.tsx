@@ -22,6 +22,7 @@ import { TrailerWithSubs } from "./Video/TrailerWithSubs";
 import { WeatherMap } from "./components/WeatherMap/WeatherMap";
 import { ZoomOutEditor } from "./Video/ZoomOutEditor";
 import { getFont } from "./Video/helpers/load-font";
+import { DoraemonTrailer } from "./Video/DoraemonTrailer";
 
 const { width, height } = CANVAS;
 const fps = 30;
@@ -210,6 +211,14 @@ export const RemotionVideo = () => {
         id="TrailerWithSubs"
         component={TrailerWithSubs}
         durationInFrames={20 * fps}
+        fps={fps}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="DoraemonTrailer"
+        component={DoraemonTrailer}
+        durationInFrames={fps * 30}
         fps={fps}
         width={1920}
         height={1080}
